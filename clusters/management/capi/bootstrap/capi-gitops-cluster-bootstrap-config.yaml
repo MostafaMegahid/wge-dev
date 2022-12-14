@@ -6,12 +6,13 @@ metadata:
 spec:
   clusterSelector:
     matchLabels:
-      weave.works/capi: bootstrap
+      weave.works/flux: "bootstrap"
   jobTemplate:
     generateName: "run-gitops-{{ .ObjectMeta.Name }}"
     spec:
       containers:
-        - image: ghcr.io/fluxcd/flux-cli:v0.35
+        - image: ghcr.io/fluxcd/flux-cli:v0.35.0
+          imagePullPolicy: Always
           name: flux-bootstrap
           resources: {}
           volumeMounts:
@@ -23,13 +24,16 @@ spec:
               "bootstrap",
               "github",
               "--kubeconfig=/etc/gitops/value",
-              "--owner=$GITHUB_USER",
+              "--owner=waleedhammam",
               "--repository=wge-dev",
               "--path=./clusters/{{ .ObjectMeta.Namespace }}/{{ .ObjectMeta.Name }}",
             ]
           envFrom:
             - secretRef:
                 name: my-pat
+          env:
+            - name: EXP_CLUSTER_RESOURCE_SET
+              value: "true"
       restartPolicy: Never
       volumes:
         - name: kubeconfig
