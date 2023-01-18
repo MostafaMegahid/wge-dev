@@ -1,7 +1,7 @@
 apiVersion: capi.weave.works/v1alpha1
 kind: CAPITemplate
 metadata:
-  name: cluster-template-development
+  name: cluster-template-development-dev
   namespace: default
   annotations:
     templates.weave.works/profiles-enabled: "true"
@@ -30,6 +30,7 @@ spec:
         labels:
           weave.works/flux: bootstrap
           weave.works/apps: "capd"
+          environment: dev
         annotations:
           metadata.weave.works/dashboard.prometheus: https://prometheus.io/
       spec:
