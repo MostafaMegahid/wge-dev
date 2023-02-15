@@ -5,9 +5,6 @@ metadata:
   name: wego-admin-cluster-role-binding
 subjects:
   - kind: User
-    name: wego-admin
-    apiGroup: rbac.authorization.k8s.io
-  - kind: User
     name: dev-podinfo
     apiGroup: rbac.authorization.k8s.io
 roleRef:
